@@ -1,0 +1,2 @@
+let fun first a #b = a in
+    first(7, 2)
