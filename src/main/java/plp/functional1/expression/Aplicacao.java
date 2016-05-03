@@ -36,7 +36,7 @@ public class Aplicacao implements Expressao {
 			throw new VariavelJaDeclaradaException(func);
 		}
 
-		Map<Id, Valor> mapIdValor = resolveParametersBindings(ambiente, funcao);
+		Map<Id, Expressao> mapIdValor = resolveParametersBindings(ambiente, funcao);
 
 		ambiente.incrementa();
 
@@ -118,21 +118,21 @@ public class Aplicacao implements Expressao {
 	}
 
 	private void includeValueBindings(AmbienteExecucao ambiente,
-			Map<Id, Valor> mapIdValor) throws VariavelJaDeclaradaException {
-		for (Map.Entry<Id, Valor> mapeamento : mapIdValor.entrySet()) {
+			Map<Id, Expressao> mapIdValor) throws VariavelJaDeclaradaException {
+		for (Map.Entry<Id, Expressao> mapeamento : mapIdValor.entrySet()) {
 			Id id = mapeamento.getKey();
-			Valor valor = mapeamento.getValue();
-			ambiente.map(id, valor);
+			Expressao expressao = mapeamento.getValue();
+			ambiente.map(id, expressao);
 		}
 	}
 
-	private Map<Id, Valor> resolveParametersBindings(AmbienteExecucao ambiente,
+	private Map<Id, Expressao> resolveParametersBindings(AmbienteExecucao ambiente,
 			DefFuncao funcao) throws VariavelNaoDeclaradaException,
 			VariavelJaDeclaradaException {
 		List<ArgumentoFuncao> parametrosId = funcao.getListaId();
 		List<? extends Expressao> expressoesValorReal = argsExpressao;
 
-		Map<Id, Valor> mapIdValor = new HashMap<Id, Valor>();
+		Map<Id, Expressao> mapIdValor = new HashMap<>();
 
 		Iterator<? extends Expressao> iterExpressoesValor = expressoesValorReal
 				.iterator();
