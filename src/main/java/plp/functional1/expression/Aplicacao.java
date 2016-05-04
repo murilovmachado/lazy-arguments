@@ -139,7 +139,14 @@ public class Aplicacao implements Expressao {
 		//TODO: Se parametro for lazy, não avaliar, salvar toda a expressao no map
 		for (ArgumentoFuncao arg : parametrosId) {
 			Expressao exp = iterExpressoesValor.next();
-			Valor valorReal = exp.avaliar(ambiente);
+			Expressao valorReal;
+
+			if(arg.isLazy()) {
+				valorReal = exp;
+			} else {
+				valorReal = exp.avaliar(ambiente);
+			}
+
 			mapIdValor.put(arg.getId(), valorReal);
 		}
 		return mapIdValor;
